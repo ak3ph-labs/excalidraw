@@ -1,0 +1,21 @@
+# ak3ph: Railway build for draw.ak3ph.si
+# Same as the upstream Dockerfile, but with the cache-mount id prefix Railway
+# requires (s/<service id>-...). Kept separate so upstream syncs don't conflict.
+FROM node:24 AS build
+
+WORKDIR /opt/node_app
+
+COPY . .
+
+RUN --mount=type=cache,id=s/fd598dae-bc06-4add-92a0-7395b04be4f9-/usr/local/share/.cache/yarn,target=/usr/local/share/.cache/yarn \
+    yarn --frozen-lockfile --network-timeout 600000
+
+ARG NODE_ENV=production
+
+RUN yarn build:app:docker
+
+FROM nginx:stable-alpine-slim
+
+COPY --from=build /opt/node_app/excalidraw-app/build /usr/share/nginx/html
+
+HEALTHCHECK CMD wget -q -O /dev/null http://localhost || exit 1
