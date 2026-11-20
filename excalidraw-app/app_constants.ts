@@ -52,6 +52,9 @@ export const STORAGE_KEYS = {
   __LEGACY_LOCAL_STORAGE_LIBRARY: "excalidraw-library",
 } as const;
 
+// ak3ph: our fork's repo, used for every GitHub link in the app
+export const AK3PH_GITHUB_URL = "https://github.com/ak3ph-labs/excalidraw";
+
 export const COOKIES = {
   AUTH_STATE_COOKIE: "excplus-auth",
 } as const;
