@@ -1,9 +1,8 @@
 import {
-  loginIcon,
-  ExcalLogo,
+  // DiscordIcon, // ak3ph: re-enable with the Discord menu item below
+  GithubIcon,
   eyeIcon,
 } from "@excalidraw/excalidraw/components/icons";
-import { useI18n } from "@excalidraw/excalidraw/i18n";
 import { MainMenu } from "@excalidraw/excalidraw/index";
 import React from "react";
 
@@ -12,7 +11,7 @@ import { isDevEnv } from "@excalidraw/common";
 import type { Theme } from "@excalidraw/element/types";
 
 import { LanguageList } from "../app-language/LanguageList";
-import { isExcalidrawPlusSignedUser } from "../app_constants";
+import { AK3PH_GITHUB_URL } from "../app_constants";
 
 import { saveDebugState } from "./DebugCanvas";
 
@@ -23,7 +22,6 @@ export const AppMainMenu: React.FC<{
   theme: Theme | "system";
   refresh: () => void;
 }> = React.memo((props) => {
-  const { t } = useI18n();
   return (
     <MainMenu>
       <MainMenu.DefaultItems.LoadScene />
@@ -41,25 +39,17 @@ export const AppMainMenu: React.FC<{
       <MainMenu.DefaultItems.Help />
       <MainMenu.DefaultItems.ClearCanvas />
       <MainMenu.Separator />
-      <MainMenu.ItemLink
-        icon={ExcalLogo}
-        href={`${
-          import.meta.env.VITE_APP_PLUS_LP
-        }/plus?utm_source=excalidraw&utm_medium=app&utm_content=hamburger`}
-        className=""
-      >
-        Excalidraw+
+      {/* ak3ph: Excalidraw+ link, X link and Excalidraw+ sign-up removed.
+          Socials replaced with our own links. */}
+      <MainMenu.ItemLink icon={GithubIcon} href={AK3PH_GITHUB_URL}>
+        GitHub
       </MainMenu.ItemLink>
-      <MainMenu.DefaultItems.Socials />
-      <MainMenu.ItemLink
-        icon={loginIcon}
-        href={`${import.meta.env.VITE_APP_PLUS_APP}${
-          isExcalidrawPlusSignedUser ? "" : "/sign-up"
-        }?utm_source=signin&utm_medium=app&utm_content=hamburger`}
-        className="highlighted"
-      >
-        {isExcalidrawPlusSignedUser ? t("labels.signIn") : t("labels.signUp")}
+      {/* ak3ph: Discord disabled for now — uncomment (and the DiscordIcon
+          import above) and set our invite link when we have one.
+      <MainMenu.ItemLink icon={DiscordIcon} href="https://discord.gg/UexuTaE">
+        Discord
       </MainMenu.ItemLink>
+      */}
       {isDevEnv() && (
         <MainMenu.Item
           icon={eyeIcon}
